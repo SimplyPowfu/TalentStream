@@ -1,0 +1,130 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.Infrastructure/TalentStream.Infrastructure.csproj": {}
+  },
+  "projects": {
+    "/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.Core/TalentStream.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.Core/TalentStream.Core.csproj",
+        "projectName": "TalentStream.Core",
+        "projectPath": "/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.Core/TalentStream.Core.csproj",
+        "packagesPath": "/home/ecarbona/.nuget/packages/",
+        "outputPath": "/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.Core/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/ecarbona/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/home/ecarbona/.dotnet/sdk/6.0.428/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.Infrastructure/TalentStream.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.Infrastructure/TalentStream.Infrastructure.csproj",
+        "projectName": "TalentStream.Infrastructure",
+        "projectPath": "/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.Infrastructure/TalentStream.Infrastructure.csproj",
+        "packagesPath": "/home/ecarbona/.nuget/packages/",
+        "outputPath": "/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.Infrastructure/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/ecarbona/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.Core/TalentStream.Core.csproj": {
+                "projectPath": "/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.Core/TalentStream.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.25, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.25, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/home/ecarbona/.dotnet/sdk/6.0.428/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

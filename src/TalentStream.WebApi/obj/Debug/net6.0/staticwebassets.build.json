@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "IVpCy4oi0MuonoBHorXGdDqDKIS9Jrfiky+zLtgfgd4=",
+  "Source": "TalentStream.WebApi",
+  "BasePath": "_content/TalentStream.WebApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

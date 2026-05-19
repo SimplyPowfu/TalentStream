@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: experis_sql_server
+    environment:
+      - ACCEPT_EULA=Y 
+      - MSSQL_SA_PASSWORD=Password123!
+    ports:
+      - "1433:1433"
+    networks:
+      - talentstream
+
+  adminer:
+    image: adminer:latest
+    container_name: experis_adminer
+    ports:
+      - "8081:8080"
+    depends_on:
+      - sqlserver
+    networks:
+      - talentstream
+
+  mongodb:
+    image: mongo:latest
+    container_name: experis_mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - talentstream
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: experis_mongo_express
+    ports:
+      - "8082:8081"
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+      - ME_CONFIG_MONGODB_PORT=27017
+    depends_on:
+      - mongodb
+    networks:
+      - talentstream
+
+  redis:
+    image: redis:alpine
+    container_name: experis_redis
+    ports:
+      - "6380:6379"
+    networks:
+      - talentstream
+
+networks:
+    talentstream:
+      driver: bridge

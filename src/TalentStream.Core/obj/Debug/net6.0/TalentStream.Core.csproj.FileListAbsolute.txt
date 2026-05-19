@@ -1,0 +1,12 @@
+/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.Core/bin/Debug/net6.0/TalentStream.Core.deps.json
+/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.Core/bin/Debug/net6.0/TalentStream.Core.dll
+/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.Core/bin/Debug/net6.0/TalentStream.Core.pdb
+/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.Core/obj/Debug/net6.0/TalentStream.Core.csproj.AssemblyReference.cache
+/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.Core/obj/Debug/net6.0/TalentStream.Core.GeneratedMSBuildEditorConfig.editorconfig
+/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.Core/obj/Debug/net6.0/TalentStream.Core.AssemblyInfoInputs.cache
+/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.Core/obj/Debug/net6.0/TalentStream.Core.AssemblyInfo.cs
+/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.Core/obj/Debug/net6.0/TalentStream.Core.csproj.CoreCompileInputs.cache
+/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.Core/obj/Debug/net6.0/TalentStream.Core.dll
+/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.Core/obj/Debug/net6.0/refint/TalentStream.Core.dll
+/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.Core/obj/Debug/net6.0/TalentStream.Core.pdb
+/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.Core/obj/Debug/net6.0/ref/TalentStream.Core.dll
