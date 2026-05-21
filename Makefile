@@ -29,7 +29,7 @@ build:
 	@echo "$(GREEN)Compiling .NET Solution...$(RESET)"
 	dotnet build
 
-ef-update: build
+update: build
 	@echo "$(GREEN)Applying EF Core Migrations to SQL Server...$(RESET)"
 	dotnet ef database update --project $(INFRA_PROJECT) --startup-project $(API_PROJECT)
 	@echo "$(GREEN)Database structure aligned!$(RESET)"

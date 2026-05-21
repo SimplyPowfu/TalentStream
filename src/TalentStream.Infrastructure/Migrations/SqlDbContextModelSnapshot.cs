@@ -22,7 +22,7 @@ namespace TalentStream.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("TalentStream.Core.Entities.ApplicationUser", b =>
+            modelBuilder.Entity("TalentStream.Core.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

@@ -1,17 +1,23 @@
 using Microsoft.EntityFrameworkCore;
+using TalentStream.Core.Repositories;
 using TalentStream.Infrastructure.Persistence;
+using TalentStream.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("SqlDb");
 builder.Services.AddDbContext<SqlDbContext>(options => options.UseSqlServer(connectionString));
+
+builder.Services.AddSingleton<MongoDbContext>();
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ICandidateRepository, CandidateRepository>();
 
 var app = builder.Build();
 

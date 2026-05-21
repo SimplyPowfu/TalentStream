@@ -12,7 +12,7 @@ namespace TalentStream.Infrastructure.Persistence
         }
 
         // I DbSet dicono a EF Core quali classi devono diventare tabelle nel Database.
-        public DbSet<ApplicationUser> Users { get; set; } = null!;
+        public DbSet<User> Users { get; set; } = null!;
         public DbSet<Company> Companies { get; set; } = null!;
         public DbSet<JobPosting> JobPostings { get; set; } = null!;
 

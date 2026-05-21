@@ -8,7 +8,7 @@ ExperisTalentStream/
 │   ├── TalentStream.Core/             # LOGICA DI BUSINESS (Nessuna dipendenza esterna)
 │   │   ├── TalentStream.Core.csproj
 │   │   ├── Entities/                  # Modelli di dominio puri (Classi C#)
-│   │   │   ├── ApplicationUser.cs     # Dati utente e credenziali
+│   │   │   ├── User.cs     # Dati utente e credenziali
 │   │   │   ├── Company.cs             # Anagrafica aziende clienti Experis
 │   │   │   ├── JobPosting.cs          # Annunci di lavoro (destinati a SQL)
 │   │   │   └── CandidateProfile.cs    # CV e competenze fluide (destinato a Mongo)
