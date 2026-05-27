@@ -22,7 +22,7 @@ namespace TalentStream.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("TalentStream.Core.Entities.User", b =>
+            modelBuilder.Entity("TalentStream.Core.Entities.Company", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -32,31 +32,6 @@ namespace TalentStream.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("TalentStream.Core.Entities.Company", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Industry")
                         .IsRequired()
@@ -107,6 +82,47 @@ namespace TalentStream.Infrastructure.Migrations
                     b.ToTable("JobPostings");
                 });
 
+            modelBuilder.Entity("TalentStream.Core.Entities.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Surame")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("TalentStream.Core.Entities.JobPosting", b =>
                 {
                     b.HasOne("TalentStream.Core.Entities.Company", "Company")
@@ -118,8 +134,19 @@ namespace TalentStream.Infrastructure.Migrations
                     b.Navigation("Company");
                 });
 
+            modelBuilder.Entity("TalentStream.Core.Entities.User", b =>
+                {
+                    b.HasOne("TalentStream.Core.Entities.Company", "Company")
+                        .WithMany("Employees")
+                        .HasForeignKey("CompanyId");
+
+                    b.Navigation("Company");
+                });
+
             modelBuilder.Entity("TalentStream.Core.Entities.Company", b =>
                 {
+                    b.Navigation("Employees");
+
                     b.Navigation("JobPostings");
                 });
 #pragma warning restore 612, 618

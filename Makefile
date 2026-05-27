@@ -3,50 +3,54 @@ INFRA_FILE     = docker-compose.yml
 API_PROJECT    = src/TalentStream.WebApi
 INFRA_PROJECT  = src/TalentStream.Infrastructure
 
-GREEN          = \033[0;32m
-RED            = \033[0;31m
-RESET          = \033[0m
+CYAN  := \033[0;36m
+GREEN := \033[0;32m
+NC    := \033[0m
 
 all: up
 
 up:
-	@echo "$(GREEN)Starting Docker Infrastructure...$(RESET)"
-	$(DOCKER_COMPOSE) -f $(INFRA_FILE) up -d
-	@echo "$(GREEN)Infrastructure is up! Adminer: http://localhost:8081/ | MongoExpress: http://localhost:8082/$(RESET)"
+	$(DOCKER_COMPOSE) -f $(INFRA_FILE) up -d --build
+	@echo ""
+	@echo "$(GREEN)==================================================$(NC)"
+	@echo "$(GREEN)   Servizi avviati con successo! $(NC)"
+	@echo "$(GREEN)==================================================$(NC)"
+	@echo "Puoi accedere alle interfacce web ai seguenti link:"
+	@echo ""
+	@echo "  $(CYAN)Swagger:$(NC)       http://localhost:5000/swagger/index.html"
+	@echo "  $(CYAN)Adminer:$(NC)       http://localhost:8081/"
+	@echo "  $(CYAN)MongoExpress:$(NC)  http://localhost:8082/"
+	@echo ""
+	@echo "$(GREEN)==================================================$(NC)"
 
 down:
-	@echo "$(RED)Stopping Docker Infrastructure...$(RESET)"
 	$(DOCKER_COMPOSE) -f $(INFRA_FILE) down
-	@echo "$(RED)Infrastructure stopped.$(RESET)"
+
+backend:
+	docker compose up -d --build backend
 
 restart:
-	@echo "$(GREEN)Restarting Infrastructure...$(RESET)"
 	$(DOCKER_COMPOSE) -f $(INFRA_FILE) down --remove-orphans
 	$(DOCKER_COMPOSE) -f $(INFRA_FILE) up -d
-	@echo "$(GREEN)Infrastructure restarted successfully.$(RESET)"
-
+	
 build:
-	@echo "$(GREEN)Compiling .NET Solution...$(RESET)"
 	dotnet build
 
 update: build
-	@echo "$(GREEN)Applying EF Core Migrations to SQL Server...$(RESET)"
 	dotnet ef database update --project $(INFRA_PROJECT) --startup-project $(API_PROJECT)
-	@echo "$(GREEN)Database structure aligned!$(RESET)"
+
+migration:
+	@read -p "Inserisci il nome della migrazione (es. AddPhoneToUser): " msg; \
+	dotnet ef migrations add $$msg --project $(INFRA_PROJECT) --startup-project $(API_PROJECT); \
+	dotnet ef database update --project $(INFRA_PROJECT) --startup-project $(API_PROJECT); \
 
 clean:
-	@echo "$(RED)Cleaning up containers and orphan resources...$(RESET)"
 	$(DOCKER_COMPOSE) -f $(INFRA_FILE) down --remove-orphans
 
 fclean:
-	@echo "$(RED)WARNING: Purging ALL containers, networks and database VOLUMES...$(RESET)"
 	$(DOCKER_COMPOSE) -f $(INFRA_FILE) down --remove-orphans -v
-	@echo "$(RED)Full wipe completed. SQL Server data has been reset.$(RESET)"
 
-reinit: fclean up ef-update
+re: fclean up update
 
-status:
-	@echo "$(GREEN)Current Container Status:$(RESET)"
-	$(DOCKER_COMPOSE) -f $(INFRA_FILE) ps -a
 
-.PHONY: all up down restart reinit clean fclean status build ef-update
+.PHONY: all up down backend restart build update clean fclean re

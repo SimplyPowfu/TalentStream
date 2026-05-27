@@ -17,7 +17,7 @@ builder.Services.AddDbContext<SqlDbContext>(options => options.UseSqlServer(conn
 builder.Services.AddSingleton<MongoDbContext>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<ICandidateRepository, CandidateRepository>();
+builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 
 var app = builder.Build();
 

@@ -10,6 +10,9 @@ namespace TalentStream.Core.Entities
         
         public string Location { get; set; } = string.Empty; // Città della sede
 
-        public List<JobPosting> JobPostings { get; set; } = new(); //relazione 1 a Molti (One-to-Many) nel database.
+        public ICollection<User> Employees { get; set; } = new List<User>();
+        public ICollection<JobPosting> JobPostings { get; set; } = new List<JobPosting>();//relazione 1 a Molti (One-to-Many) nel database.
+    
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }
