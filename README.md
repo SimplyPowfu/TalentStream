@@ -1,8 +1,8 @@
 ```
-ExperisTalentStream/
+TalentStream/
 │
 ├── docker-compose.yml                 # Configurazione dei container (SQL, Mongo, Redis, API)
-├── ExperisTalentStream.sln            # File di Soluzione globale .NET
+├── TalentStream.sln            # File di Soluzione globale .NET
 │
 ├── src/
 │   ├── TalentStream.Core/             # LOGICA DI BUSINESS (Nessuna dipendenza esterna)

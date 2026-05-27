@@ -21,6 +21,7 @@ up:
 	@echo "  $(CYAN)Adminer:$(NC)       http://localhost:8081/"
 	@echo "  $(CYAN)MongoExpress:$(NC)  http://localhost:8082/"
 	@echo ""
+	@echo "$(CYAN)Ricorda di lanciare Make update per creare i db$(NC)"
 	@echo "$(GREEN)==================================================$(NC)"
 
 down:

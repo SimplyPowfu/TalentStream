@@ -37,7 +37,7 @@ services:
 
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: experis_sql_server
+    container_name: User_sql_server
     environment:
       - ACCEPT_EULA=Y 
       - MSSQL_SA_PASSWORD=Password123!
@@ -48,7 +48,7 @@ services:
 
   adminer:
     image: adminer:latest
-    container_name: experis_adminer
+    container_name: adminer
     ports:
       - "8081:8080"
     depends_on:
@@ -58,7 +58,7 @@ services:
 
   mongodb:
     image: mongo:latest
-    container_name: experis_mongo
+    container_name: mongo
     ports:
       - "27017:27017"
     networks:
@@ -66,7 +66,7 @@ services:
 
   mongo-express:
     image: mongo-express:latest
-    container_name: experis_mongo_express
+    container_name: mongo_express
     ports:
       - "8082:8081"
     environment:
@@ -79,7 +79,7 @@ services:
 
   redis:
     image: redis:alpine
-    container_name: experis_redis
+    container_name: redis
     ports:
       - "6380:6379"
     networks:
