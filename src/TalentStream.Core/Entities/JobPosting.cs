@@ -8,7 +8,7 @@ namespace TalentStream.Core.Entities
         
         public string Description { get; set; } = string.Empty;
         
-        public decimal SalaryRange { get; set; } // Budget massimo per la posizione
+        public decimal? SalaryRange { get; set; } // Budget massimo per la posizione
         
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

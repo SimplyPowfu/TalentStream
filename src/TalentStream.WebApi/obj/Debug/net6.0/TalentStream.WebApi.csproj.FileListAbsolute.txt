@@ -79,3 +79,5 @@
 /home/ecarbona/Documents/Project/TalentStream/src/TalentStream.WebApi/bin/Debug/net6.0/runtimes/osx/native/libmongocrypt.dylib
 /home/ecarbona/Documents/Project/TalentStream/src/TalentStream.WebApi/bin/Debug/net6.0/runtimes/win/native/mongocrypt.dll
 /home/ecarbona/Documents/Project/TalentStream/src/TalentStream.WebApi/bin/Debug/net6.0/BCrypt-Net-Next.dll
+/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.WebApi/bin/Debug/net6.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.WebApi/bin/Debug/net6.0/Microsoft.IdentityModel.Abstractions.dll

@@ -27,20 +27,20 @@ up:
 down:
 	$(DOCKER_COMPOSE) -f $(INFRA_FILE) down
 
-backend:
-	docker compose up -d --build backend
+build:
+	dotnet build
 
 restart:
 	$(DOCKER_COMPOSE) -f $(INFRA_FILE) down --remove-orphans
 	$(DOCKER_COMPOSE) -f $(INFRA_FILE) up -d
-	
-build:
-	dotnet build
+
+backend: build
+	docker compose up -d --build backend
 
 update: build
 	dotnet ef database update --project $(INFRA_PROJECT) --startup-project $(API_PROJECT)
 
-migration:
+migration: build
 	@read -p "Inserisci il nome della migrazione (es. AddPhoneToUser): " msg; \
 	dotnet ef migrations add $$msg --project $(INFRA_PROJECT) --startup-project $(API_PROJECT); \
 	dotnet ef database update --project $(INFRA_PROJECT) --startup-project $(API_PROJECT); \
@@ -51,7 +51,7 @@ clean:
 fclean:
 	$(DOCKER_COMPOSE) -f $(INFRA_FILE) down --remove-orphans -v
 
-re: fclean up update
+re: fclean up
 
 
 .PHONY: all up down backend restart build update clean fclean re
