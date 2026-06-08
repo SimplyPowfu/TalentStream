@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using TalentStream.Core.Entities;
 using TalentStream.Core.Repositories;
 using TalentStream.Core.DTOs.JobPosting;
+using TalentStream.WebApi.Filters;
 
 namespace TalentStream.WebApi.Controllers
 {
@@ -53,6 +54,74 @@ namespace TalentStream.WebApi.Controllers
 			return Ok(new { message = "JobPost creata con successo!" });
 		}
 
+		[HttpGet("alljob")]
+		[Authorize(Roles = "Candidate,Recruiter")]
+		public async Task<IActionResult> AllJobs()
+		{
+			var jobPostings = await _jobRepository.GetAllJobPostingAsync();
+			var response = jobPostings.Select(job => new GetJobResponseDto
+			{
+				Id = job.Id,
+				Title = job.Title,
+				Description = job.Description,
+				SalaryRange = job.SalaryRange,
+				CompanyId = job.CompanyId,
+				CompanyName = job.Company?.Name ?? "Azienda Sconosciuta",
+				CompanyLocation = job.Company?.Location ?? "Remoto"
+			});
+			return Ok(response);
+		}
 
+		[HttpGet("job/{id}")]
+		[Authorize(Roles = "Candidate,Recruiter")]
+		public async Task<IActionResult> GetIdJob(int id)
+		{
+			var job = await _jobRepository.GetIdJobPostingAsync(id);
+			if (job == null)
+				return NotFound(new { message = "JobPost non trovata." });
+			var response = new GetJobResponseDto
+			{
+				Id = job.Id,
+				Title = job.Title,
+				Description = job.Description,
+				SalaryRange = job.SalaryRange,
+				CompanyId = job.CompanyId,
+				CompanyName = job.Company?.Name ?? "Azienda Sconosciuta",
+				CompanyLocation = job.Company?.Location ?? "Remoto"
+			};
+			return Ok(response);
+		}
+
+		[HttpPatch("job/{id}")]
+		[Authorize(Roles = "Recruiter")]
+		[AuthorizeJobOwner]
+		public async Task<IActionResult> UpdateIdJob(int id, UpdateJobDto dto)
+		{
+			var job = await _jobRepository.GetIdJobPostingAsync(id);
+			if (job == null)
+				return NotFound(new { message = "JobPost non trovata." });
+
+			job.Title = dto.Title ?? job.Title;
+			job.Description = dto.Description ?? job.Description;
+			job.SalaryRange = dto.SalaryRange ?? job.SalaryRange;
+			_jobRepository.Update(job);
+			await _jobRepository.SaveChangesAsync();
+
+			return Ok(new { message = "Annuncio aggiornato con successo!"});
+		}
+
+		[HttpDelete("job/{id}")]
+		[Authorize(Roles = "Recruiter")]
+		[AuthorizeJobOwner]
+		public async Task<IActionResult> DeleteIdJob(int id)
+		{
+			var job = await _jobRepository.GetIdJobPostingAsync(id);
+			if (job == null)
+				return NotFound(new { message = "JobPost non trovata." });
+			_jobRepository.Delete(job);
+			await _jobRepository.SaveChangesAsync();
+
+			return Ok(new { message = "Annuncio Cancellato con successo!"});
+		}
 	}
 }

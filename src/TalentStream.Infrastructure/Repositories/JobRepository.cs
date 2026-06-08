@@ -24,6 +24,31 @@ namespace TalentStream.Infrastructure.Repositories
 			return await _context.JobPostings.FirstOrDefaultAsync(j => j.Title == title);
 		}
 
+		public async Task<IEnumerable<JobPosting>> GetAllJobPostingAsync()
+		{
+			return await _context.JobPostings
+			.Include(j => j.Company) //JOIN SQL con la tabella Companies
+			.OrderByDescending(j => j.CreatedAt)
+			.ToListAsync();
+		}
+
+		public async Task<JobPosting?> GetIdJobPostingAsync(int id)
+		{
+			return await _context.JobPostings
+			.Include(j => j.Company)
+			.FirstOrDefaultAsync(j => j.Id == id);
+		}
+
+		public void Update(JobPosting jobPosting)
+		{
+			_context.JobPostings.Update(jobPosting);
+		}
+
+		public void Delete(JobPosting jobPosting)
+		{
+			_context.JobPostings.Remove(jobPosting);
+		}
+
 		public async Task AddAsync(JobPosting jobPosting)
 		{
 			await _context.JobPostings.AddAsync(jobPosting);

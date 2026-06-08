@@ -6,6 +6,10 @@ namespace TalentStream.Core.Repositories
 	{
 		Task<JobPosting?> GetByIdAsync(int id);
 		Task<JobPosting?> GetByTitleAsync(string title);
+		Task<IEnumerable<JobPosting>> GetAllJobPostingAsync();
+		Task<JobPosting?> GetIdJobPostingAsync(int id);
+		void Update(JobPosting jobPosting);
+		void Delete(JobPosting jobPosting);
 		Task AddAsync(JobPosting jobPosting);
 		Task SaveChangesAsync();
 	}
