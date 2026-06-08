@@ -2447,11 +2447,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.Infrastructure/TalentStream.Infrastructure.csproj",
+      "projectUniqueName": "/home/ecarbona/Documenti/TalentStream/src/TalentStream.Infrastructure/TalentStream.Infrastructure.csproj",
       "projectName": "TalentStream.Infrastructure",
-      "projectPath": "/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.Infrastructure/TalentStream.Infrastructure.csproj",
+      "projectPath": "/home/ecarbona/Documenti/TalentStream/src/TalentStream.Infrastructure/TalentStream.Infrastructure.csproj",
       "packagesPath": "/home/ecarbona/.nuget/packages/",
-      "outputPath": "/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.Infrastructure/obj/",
+      "outputPath": "/home/ecarbona/Documenti/TalentStream/src/TalentStream.Infrastructure/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/ecarbona/.nuget/NuGet/NuGet.Config"
@@ -2466,8 +2466,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.Core/TalentStream.Core.csproj": {
-              "projectPath": "/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.Core/TalentStream.Core.csproj"
+            "/home/ecarbona/Documenti/TalentStream/src/TalentStream.Core/TalentStream.Core.csproj": {
+              "projectPath": "/home/ecarbona/Documenti/TalentStream/src/TalentStream.Core/TalentStream.Core.csproj"
             }
           }
         }
@@ -2476,6 +2476,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -2513,7 +2518,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/home/ecarbona/.dotnet/sdk/6.0.428/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/home/ecarbona/.dotnet/sdk/8.0.421/RuntimeIdentifierGraph.json"
       }
     }
   }

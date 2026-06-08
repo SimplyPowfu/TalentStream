@@ -27,20 +27,20 @@ namespace TalentStream.WebApi.Controllers
 
 			var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			if (string.IsNullOrEmpty(userIdClaim))
-                return Unauthorized(new { message = "Utente non identificato nel token." });
-        
-            int userId = int.Parse(userIdClaim);
-			
+				return Unauthorized(new { message = "Utente non identificato nel token." });
+
+			int userId = int.Parse(userIdClaim);
+
 			var existingCompany = await _companyRepository.GetByNameAsync(dto.Name);
 			if (existingCompany != null)
 				return BadRequest(new { message = "Company gia' registrata." });
-			
+
 			var user = await _userRepository.GetByIdAsync(userId);
-            if (user == null)
-                return NotFound(new { message = "Utente non trovato." });
-            if (user.CompanyId != null)
-                return BadRequest(new { message = "Questo account è già associato a un'azienda." });
-			
+			if (user == null)
+				return NotFound(new { message = "Utente non trovato." });
+			if (user.CompanyId != null)
+				return BadRequest(new { message = "Questo account è già associato a un'azienda." });
+
 			var newCompany = new Company
 			{
 				Name = dto.Name,
@@ -55,7 +55,7 @@ namespace TalentStream.WebApi.Controllers
 			user.CompanyId = newCompany.Id;
 			await _userRepository.SaveChangesAsync();
 
-			return Ok(new { message = "Company creata con successo!"});
+			return Ok(new { message = "Company creata con successo!" });
 		}
 	}
 }

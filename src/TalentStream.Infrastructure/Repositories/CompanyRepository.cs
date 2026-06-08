@@ -5,7 +5,7 @@ using TalentStream.Infrastructure.Persistence;
 
 namespace TalentStream.Infrastructure.Repositories
 {
-	public class CompanyRepository: ICompanyRepository
+	public class CompanyRepository : ICompanyRepository
 	{
 		private readonly SqlDbContext _context;
 

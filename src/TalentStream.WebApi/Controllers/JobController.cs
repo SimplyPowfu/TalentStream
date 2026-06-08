@@ -35,9 +35,9 @@ namespace TalentStream.WebApi.Controllers
 
 			var user = await _userRepository.GetByIdAsync(userId);
 			if (user == null)
-                return NotFound(new { message = "Utente non trovato." });
-            if (user.CompanyId == null)
-                return BadRequest(new { message = "Questo account non è associato a un'azienda." });
+				return NotFound(new { message = "Utente non trovato." });
+			if (user.CompanyId == null)
+				return BadRequest(new { message = "Questo account non è associato a un'azienda." });
 
 			var newJobPost = new JobPosting
 			{
@@ -50,9 +50,9 @@ namespace TalentStream.WebApi.Controllers
 
 			await _jobRepository.AddAsync(newJobPost);
 			await _jobRepository.SaveChangesAsync();
-			return Ok(new { message = "JobPost creata con successo!"});
+			return Ok(new { message = "JobPost creata con successo!" });
 		}
 
-		
+
 	}
 }

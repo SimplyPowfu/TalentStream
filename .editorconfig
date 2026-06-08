@@ -1,0 +1,15 @@
+root = true
+
+[*.cs]
+# Stile di indentazione standard .NET
+indent_style = tab
+indent_size = 4
+
+# Regole di formattazione C#
+csharp_new_line_before_open_brace = all
+csharp_new_line_before_else = true
+csharp_new_line_before_catch = true
+
+# Preferenze sul linguaggio
+csharp_style_var_for_built_in_types = true:suggestion
+csharp_style_var_when_type_is_apparent = true:suggestion
