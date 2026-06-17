@@ -21,6 +21,6 @@ namespace TalentStream.Infrastructure.Persistence
 		// Espone la collezione dei profili dei candidati.
 		// Se la collezione "Candidates" non esiste ancora nel DB, MongoDB la creerà automaticamente al primo inserimento.
 		public IMongoCollection<CandidateProfile> Candidates =>
-			_database.GetCollection<CandidateProfile>("Candidates");
+			_database.GetCollection<CandidateProfile>("CandidateProfile");
 	}
 }

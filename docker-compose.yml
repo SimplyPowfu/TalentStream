@@ -27,11 +27,14 @@ services:
       dockerfile: Dockerfile
     ports:
       - "5000:80"
+    volumes:
+      - ${PWD}/uploads:/app/wwwroot/uploads
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__SqlDb=Server=sqlserver;Database=TalentStreamDb;User Id=sa;Password=Password123!;Encrypt=False;
     depends_on:
       - sqlserver
+      - mongodb
     networks:
       - talentstream
 

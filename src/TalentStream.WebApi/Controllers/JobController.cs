@@ -101,8 +101,8 @@ namespace TalentStream.WebApi.Controllers
 			if (job == null)
 				return NotFound(new { message = "JobPost non trovata." });
 
-			job.Title = dto.Title ?? job.Title;
-			job.Description = dto.Description ?? job.Description;
+			job.Title = string.IsNullOrEmpty(dto.Title) ? job.Title : dto.Title;
+			job.Description = string.IsNullOrEmpty(dto.Description) ? job.Description : dto.Description;
 			job.SalaryRange = dto.SalaryRange ?? job.SalaryRange;
 			_jobRepository.Update(job);
 			await _jobRepository.SaveChangesAsync();

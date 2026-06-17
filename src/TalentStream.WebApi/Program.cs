@@ -62,16 +62,18 @@ builder.Services.AddSwaggerGen(c =>
 			new string[] {}
 		}
 	});
+
+	c.MapType<IFormFile>(() => new OpenApiSchema { Type = "string", Format = "binary" });
 });
 
 var connectionString = builder.Configuration.GetConnectionString("SqlDb");
 builder.Services.AddDbContext<SqlDbContext>(options => options.UseSqlServer(connectionString));
-
 builder.Services.AddSingleton<MongoDbContext>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 builder.Services.AddScoped<IJobRepository, JobRepository>();
+builder.Services.AddScoped<ICandidateRepository, CandidateRepository>();
 
 var app = builder.Build();
 
@@ -84,6 +86,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthentication(); // Controlla il token
 app.UseAuthorization();  // Cosa puoi fare
+app.UseStaticFiles(); // per caricare i file (cv) nella cartella wwwroot
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
