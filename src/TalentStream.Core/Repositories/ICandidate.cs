@@ -7,5 +7,7 @@ namespace TalentStream.Core.Repositories
 		Task<CandidateProfile?> GetByUserIdAsync(int userId);
         Task AddAsync(CandidateProfile profile);
         Task UpdateAsync(CandidateProfile profile);
+		
+		Task<bool> Delete(int userId);
     }
 }

@@ -7,21 +7,19 @@ using TalentStream.Core.Repositories;
 namespace TalentStream.WebApi.Filter
 {
 	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-    public class AuthorizeCandidateAttribute : TypeFilterAttribute
+    public class AuthorizeUserAttribute : TypeFilterAttribute
     {
-        public AuthorizeCandidateAttribute() : base(typeof(AuthorizeCandidateFilter))
+        public AuthorizeUserAttribute() : base(typeof(AuthorizeUserFilter))
 		{
 		}
     }
 
-	public sealed class AuthorizeCandidateFilter : IAsyncActionFilter
+	public sealed class AuthorizeUserFilter : IAsyncActionFilter
 	{
-		private readonly ICandidateRepository _candidateRepository;
 		private readonly IUserRepository _userRepository;
 
-		public AuthorizeCandidateFilter(ICandidateRepository candidateRepository, IUserRepository userRepository)
+		public AuthorizeUserFilter(IUserRepository userRepository)
 		{
-			_candidateRepository = candidateRepository;
 			_userRepository = userRepository;
 		}
 
@@ -42,15 +40,7 @@ namespace TalentStream.WebApi.Filter
                 return;
             }
 
-			var profile = await _candidateRepository.GetByUserIdAsync(userId);
-			if (profile == null)
-			{
-				context.Result = new NotFoundObjectResult(new { message = "Profilo non trovato." });
-				return;
-			}
-
-			context.HttpContext.Items["ValidatedProfile"] = profile;
-			context.HttpContext.Items["ProfileUser"] = user;
+			context.HttpContext.Items["ValidatedUser"] = user;
 
 			await next();
 		}

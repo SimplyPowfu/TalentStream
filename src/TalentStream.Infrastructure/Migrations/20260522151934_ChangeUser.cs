@@ -16,7 +16,7 @@ namespace TalentStream.Infrastructure.Migrations
                 defaultValue: "");
 
             migrationBuilder.AddColumn<string>(
-                name: "Surame",
+                name: "Surname",
                 table: "Users",
                 type: "nvarchar(max)",
                 nullable: false,
@@ -30,7 +30,7 @@ namespace TalentStream.Infrastructure.Migrations
                 table: "Users");
 
             migrationBuilder.DropColumn(
-                name: "Surame",
+                name: "Surname",
                 table: "Users");
         }
     }

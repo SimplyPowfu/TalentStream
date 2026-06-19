@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "KTsFQvzLXGUWHmO5e8l0/6aBTCkFz14HdVZHGmyanuwqF+8wBydez6VK+y8kvYfds8zqahVshd9zzNWBjz3xGQ==",
+  "dgSpecHash": "OjEB+AKwn7s=",
   "success": true,
-  "projectFilePath": "/home/ecarbona/Documents/Project/TalentStream/src/TalentStream.Infrastructure/TalentStream.Infrastructure.csproj",
+  "projectFilePath": "/home/ecarbona/Documenti/TalentStream/src/TalentStream.Infrastructure/TalentStream.Infrastructure.csproj",
   "expectedPackageFiles": [
     "/home/ecarbona/.nuget/packages/awssdk.core/3.7.100.14/awssdk.core.3.7.100.14.nupkg.sha512",
     "/home/ecarbona/.nuget/packages/awssdk.securitytoken/3.7.100.14/awssdk.securitytoken.3.7.100.14.nupkg.sha512",

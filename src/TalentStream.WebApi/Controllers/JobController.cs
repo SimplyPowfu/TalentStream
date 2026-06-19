@@ -97,9 +97,9 @@ namespace TalentStream.WebApi.Controllers
 		[AuthorizeJobOwner]
 		public async Task<IActionResult> UpdateIdJob(int id, UpdateJobDto dto)
 		{
-			var job = await _jobRepository.GetIdJobPostingAsync(id);
+			var job = HttpContext.Items["ValidatedJob"] as JobPosting;
 			if (job == null)
-				return NotFound(new { message = "JobPost non trovata." });
+				return NotFound(new { message = "Errore nel recupero della JobPost" });
 
 			job.Title = string.IsNullOrEmpty(dto.Title) ? job.Title : dto.Title;
 			job.Description = string.IsNullOrEmpty(dto.Description) ? job.Description : dto.Description;
@@ -115,9 +115,9 @@ namespace TalentStream.WebApi.Controllers
 		[AuthorizeJobOwner]
 		public async Task<IActionResult> DeleteIdJob(int id)
 		{
-			var job = await _jobRepository.GetIdJobPostingAsync(id);
+			var job = HttpContext.Items["ValidatedJob"] as JobPosting;
 			if (job == null)
-				return NotFound(new { message = "JobPost non trovata." });
+				return NotFound(new { message = "Errore nel recupero della JobPost" });
 			_jobRepository.Delete(job);
 			await _jobRepository.SaveChangesAsync();
 

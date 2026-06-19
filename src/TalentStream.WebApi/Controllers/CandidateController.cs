@@ -6,9 +6,10 @@ using TalentStream.Core.Repositories;
 using TalentStream.Core.DTOs.Candidate;
 using TalentStream.WebApi.Filters;
 using TalentStream.WebApi.Filter;
+using System.Globalization;
 namespace TalentStream.WebApi.Controllers
 {
-    public class UploadCv
+	public class UploadCv
 	{
 		public IFormFile Cv { get; set; } = null!;
 	}
@@ -65,23 +66,45 @@ namespace TalentStream.WebApi.Controllers
 			return CreatedAtAction(nameof(Register), new { message = "Profilo salvato con successo." });
 		}
 
-		[HttpPatch("profile/{id}")]
+		[HttpGet("profile")]
 		[Authorize(Roles = "Candidate")]
 		[AuthorizeCandidate]
-		public async Task<IActionResult> UpdateIdProfile(int id, UpdateCandidateDto dto)
+		public ActionResult<CandidateProfile> GetProfile()
 		{
-			var profile = await _candidateRepository.GetByUserIdAsync(id);
+			var profile = HttpContext.Items["ValidatedProfile"] as CandidateProfile;
 			if (profile == null)
+				return StatusCode(500, new { message = "[GET] Errore nel recupero del profilo" });
+			return Ok(new { message = "Profilo Recuperato con successo", profile });
+		}
+
+		[HttpGet("profile/{id}")]
+		[Authorize(Roles = "Recruiter")]
+		public ActionResult<CandidateProfile> GetProfile(int id)
+		{
+			var profile = _candidateRepository.GetByUserIdAsync(id);
+			if (profile.Result == null)
 				return NotFound(new { message = "Profilo non trovato" });
+			return Ok(new { message = "Profilo Recuperato con successo", profile = profile.Result });
+		}
+
+
+		[HttpPatch("profile")]
+		[Authorize(Roles = "Candidate")]
+		[AuthorizeCandidate]
+		public async Task<IActionResult> UpdateProfile(UpdateCandidateDto dto)
+		{
+			var profile = HttpContext.Items["ValidatedProfile"] as CandidateProfile;
+			if (profile == null)
+				return StatusCode(500, new { message = "[UPDATE] Errore nel recupero del profilo" });
 
 			profile.JobPosition = dto.JobPosition ?? profile.JobPosition;
 			profile.Email = dto.Email ?? profile.Email;
 			profile.Number = dto.Number ?? profile.Number;
-			profile.Skills ??= new List<string>();
 			if (dto.Skills != null && dto.Skills.Any())
 			{
+				profile.Skills ??= new List<string>();
 				profile.Skills.AddRange(dto.Skills);
-				profile.Skills = profile.Skills.Distinct().ToList();
+				profile.Skills = profile.Skills.Distinct(StringComparer.OrdinalIgnoreCase).ToList();
 			}
 			if (dto.Experiences != null && dto.Experiences.Any())
 			{
@@ -101,12 +124,12 @@ namespace TalentStream.WebApi.Controllers
 		[HttpPost("upload-cv")]
 		[Authorize(Roles = "Candidate")]
 		[Consumes("multipart/form-data")]
-		public async Task<IActionResult> UploadCv([FromForm]UploadCv request)
+		public async Task<IActionResult> UploadCv([FromForm] UploadCv request)
 		{
-			var cv= request.Cv;
+			var cv = request.Cv;
 
 			if (cv == null || cv.Length == 0)
-				return BadRequest(new { message = "Nessun file selezionato o file vuoto." });
+				return BadRequest(new { message = "[POST] Nessun file selezionato o file vuoto." });
 			var extension = Path.GetExtension(cv.FileName).ToLowerInvariant();
 			if (extension != ".pdf")
 				return BadRequest(new { message = "Formato non supportato. Puoi caricare solo file PDF." });
@@ -119,7 +142,7 @@ namespace TalentStream.WebApi.Controllers
 			var profile = await _candidateRepository.GetByUserIdAsync(userId);
 			if (profile == null)
 				return NotFound(new { message = "Profilo candidato non trovato. Registrati prima di caricare il CV." });
-			
+
 			var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "cvs");
 			if (!Directory.Exists(uploadsFolder))
 				Directory.CreateDirectory(uploadsFolder);
@@ -143,5 +166,30 @@ namespace TalentStream.WebApi.Controllers
 			await _candidateRepository.UpdateAsync(profile);
 			return Ok(new { message = "CV caricato e collegato al profilo con successo!" });
 		}
+
+		[HttpDelete("profile")]
+		[Authorize(Roles = "Candidate")]
+		[AuthorizeCandidate]
+		public async Task<IActionResult> RemoveProfile()
+		{
+			var user = HttpContext.Items["ProfileUser"] as User;
+			if (user == null)
+				return StatusCode(500, new { message = "[DELETE] Errore nel recupero del profilo" });
+			var profile = HttpContext.Items["ValidatedProfile"] as CandidateProfile;
+			if (profile == null)
+				return StatusCode(500, new { message = "[DELETE] Errore nel recupero del profilo" });
+
+			if (!string.IsNullOrEmpty(profile.CvUrl))
+			{
+				var relativePath = profile.CvUrl.TrimStart('/');
+				var vecchioFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", relativePath);
+				if (System.IO.File.Exists(vecchioFilePath))
+					System.IO.File.Delete(vecchioFilePath);
+			}
+
+			await _candidateRepository.Delete(user.Id);
+			return Ok(new { message = "Profilo Cancellato" });
+		}
+
 	}
 }

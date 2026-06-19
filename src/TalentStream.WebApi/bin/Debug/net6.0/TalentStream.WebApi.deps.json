@@ -666,7 +666,10 @@
       },
       "TalentStream.Core/1.0.0": {
         "runtime": {
-          "TalentStream.Core.dll": {}
+          "TalentStream.Core.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "TalentStream.Infrastructure/1.0.0": {
@@ -676,7 +679,10 @@
           "TalentStream.Core": "1.0.0"
         },
         "runtime": {
-          "TalentStream.Infrastructure.dll": {}
+          "TalentStream.Infrastructure.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }

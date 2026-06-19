@@ -12,8 +12,8 @@ using TalentStream.Infrastructure.Persistence;
 namespace TalentStream.Infrastructure.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    [Migration("20260608132438_addGetJobPosting")]
-    partial class addGetJobPosting
+    [Migration("20260619154504_FixSurname")]
+    partial class FixSurname
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

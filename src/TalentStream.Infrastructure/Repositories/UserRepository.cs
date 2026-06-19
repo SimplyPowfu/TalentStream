@@ -16,12 +16,26 @@ namespace TalentStream.Infrastructure.Repositories
 
 		public async Task<User?> GetByIdAsync(int id)
 		{
-			return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+			return await _context.Users
+			.Include(u => u.Company)
+			.FirstOrDefaultAsync(u => u.Id == id);
 		}
 
 		public async Task<User?> GetByEmailAsync(string email)
 		{
-			return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+			return await _context.Users
+			.Include(u => u.Company)
+			.FirstOrDefaultAsync(u => u.Email == email);
+		}
+
+		public void Update(User user)
+		{
+			_context.Users.Update(user);
+		}
+
+		public void Delete(User user)
+		{
+			_context.Users.Remove(user);
 		}
 
 		public async Task AddAsync(User user)

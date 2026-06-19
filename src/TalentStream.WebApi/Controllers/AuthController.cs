@@ -8,6 +8,7 @@ using TalentStream.Core.Entities;
 using TalentStream.Core.Repositories;
 using TalentStream.Core.DTOs.User;
 using BCryptNet = BCrypt.Net.BCrypt;
+using TalentStream.WebApi.Filter;
 
 namespace TalentStream.WebApi.Controllers
 {
@@ -34,7 +35,7 @@ namespace TalentStream.WebApi.Controllers
 			var newUser = new User
 			{
 				Name = dto.Name,
-				Surame = dto.Surname,
+				Surname = dto.Surname,
 				Email = dto.Email,
 				PasswordHash = BCryptNet.HashPassword(dto.Password),
 				Role = dto.Role,
@@ -79,13 +80,69 @@ namespace TalentStream.WebApi.Controllers
 			var tokenString = tokenHandler.WriteToken(token);
 
 			existingUser.PasswordHash = string.Empty;
+			var UserResponse = new
+			{
+				id = existingUser.Id,
+				name = existingUser.Name,
+				surname = existingUser.Surname,
+				email = existingUser.Email,
+				role = existingUser.Role,
+				companyName = existingUser.Company?.Name
+			};
 
 			return Ok(new
 			{
 				message = "Login effettuato con successo!",
 				token = tokenString,
-				user = existingUser
+				UserResponse
 			});
+		}
+
+		[HttpGet("User")]
+		[AuthorizeUser]
+		public ActionResult<User> GetUser()
+		{
+			var user = HttpContext.Items["ValidatedUser"] as User;
+			if (user == null)
+				return NotFound(new { message = "Utente non trovato." });
+			var response = new
+			{
+				name = user.Name,
+				surname = user.Surname,
+				email = user.Email,
+				role = user.Role,
+				company = user.Company?.Name ?? null
+			};
+			return Ok(new { message = "Account recuperato con successo", response });
+		}
+
+		[HttpPatch("User")]
+		[AuthorizeUser]
+		public async Task<IActionResult> UpdateUser(UpdateUserDto dto)
+		{
+			var user = HttpContext.Items["ValidatedUser"] as User;
+			if (user == null)
+				return NotFound(new { message = "Utente non trovato." });
+			user.Name = dto.Name ?? user.Name;
+			user.Surname = dto.Surname ?? user.Surname;
+			user.Email = dto.Email ?? user.Email;
+			if (!string.IsNullOrEmpty(dto.Password))
+				user.PasswordHash = BCryptNet.HashPassword(dto.Password);
+			_userRepository.Update(user);
+			await _userRepository.SaveChangesAsync();
+			return Ok(new { message = "Account aggiornato con successo" });
+		}
+
+		[HttpDelete("User")]
+		[AuthorizeUser]
+		public async Task<IActionResult> DeleteUser()
+		{
+			var user = HttpContext.Items["ValidatedUser"] as User;
+			if (user == null)
+				return NotFound(new { message = "Utente non trovato." });
+			_userRepository.Delete(user);
+			await _userRepository.SaveChangesAsync();
+			return Ok(new { message = "Account Eliminato con successo" });
 		}
 	}
 }

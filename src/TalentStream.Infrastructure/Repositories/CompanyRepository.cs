@@ -16,7 +16,20 @@ namespace TalentStream.Infrastructure.Repositories
 
 		public async Task<Company?> GetByNameAsync(string name)
 		{
-			return await _context.Companies.FirstOrDefaultAsync(c => c.Name == name);
+			return await _context.Companies
+			.Include(c => c.Employees)
+			.Include(c => c.JobPostings)
+			.FirstOrDefaultAsync(c => c.Name == name);
+		}
+
+		public void Update(Company company)
+		{
+			_context.Companies.Update(company);
+		}
+
+		public void Delete(Company company)
+		{
+			_context.Companies.Remove(company);
 		}
 
 		public async Task AddAsync(Company company)
