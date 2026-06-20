@@ -24,12 +24,17 @@ namespace TalentStream.Infrastructure.Repositories
 			return await _context.JobPostings.FirstOrDefaultAsync(j => j.Title == title);
 		}
 
-		public async Task<IEnumerable<JobPosting>> GetAllJobPostingAsync()
-		{
-			return await _context.JobPostings
-			.Include(j => j.Company) //JOIN SQL con la tabella Companies
-			.OrderByDescending(j => j.CreatedAt)
-			.ToListAsync();
+		public async Task<(IEnumerable<JobPosting> Jobs, int Total)> GetPaginatedJobPostingsAsync(int pageNumber, int pageSize)
+{
+			int totalRecords = await _context.JobPostings.CountAsync();
+			var jobs = await _context.JobPostings
+				.Include(j => j.Company)
+				.OrderByDescending(j => j.CreatedAt)
+				.Skip((pageNumber - 1) * pageSize)
+				.Take(pageSize)
+				.ToListAsync();
+
+			return (jobs, totalRecords);
 		}
 
 		public async Task<JobPosting?> GetIdJobPostingAsync(int id)

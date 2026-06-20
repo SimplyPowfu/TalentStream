@@ -1,5 +1,9 @@
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.IdGenerators;
+using MongoDB.Bson.Serialization.Serializers;
 using TalentStream.Core.Entities;
 
 namespace TalentStream.Infrastructure.Persistence
@@ -16,6 +20,17 @@ namespace TalentStream.Infrastructure.Persistence
 
 			var databaseName = configuration["MongoSettings:DatabaseName"];
 			_database = client.GetDatabase(databaseName);
+
+			if (!BsonClassMap.IsClassMapRegistered(typeof(CandidateProfile)))
+			{
+				BsonClassMap.RegisterClassMap<CandidateProfile>(cm =>
+				{
+					cm.AutoMap();
+					cm.MapIdProperty(c => c.Id)
+					.SetIdGenerator(StringObjectIdGenerator.Instance)
+					.SetSerializer(new StringSerializer(BsonType.ObjectId));
+				});
+			}
 		}
 
 		// Espone la collezione dei profili dei candidati.

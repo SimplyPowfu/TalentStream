@@ -56,10 +56,14 @@ namespace TalentStream.WebApi.Controllers
 
 		[HttpGet("alljob")]
 		[Authorize(Roles = "Candidate,Recruiter")]
-		public async Task<IActionResult> AllJobs()
+		public async Task<IActionResult> AllJobs([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
 		{
-			var jobPostings = await _jobRepository.GetAllJobPostingAsync();
-			var response = jobPostings.Select(job => new GetJobResponseDto
+			if (pageNumber < 1) pageNumber = 1;
+			if (pageSize < 1 || pageSize > 20) pageSize = 10;
+
+			var (jobPostings, totalRecords) = await _jobRepository.GetPaginatedJobPostingsAsync(pageNumber, pageSize);
+
+			var data = jobPostings.Select(job => new GetJobResponseDto
 			{
 				Id = job.Id,
 				Title = job.Title,
@@ -69,6 +73,18 @@ namespace TalentStream.WebApi.Controllers
 				CompanyName = job.Company?.Name ?? "Azienda Sconosciuta",
 				CompanyLocation = job.Company?.Location ?? "Remoto"
 			});
+			var response = new 
+			{
+				Metadata = new 
+				{
+					CurrentPage = pageNumber,
+					PageSize = pageSize,
+					TotalRecords = totalRecords,
+					TotalPages = (int)Math.Ceiling((double)totalRecords / pageSize)
+				},
+				Data = data
+			};
+
 			return Ok(response);
 		}
 

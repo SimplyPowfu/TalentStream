@@ -51,7 +51,6 @@ namespace TalentStream.WebApi.Controllers
 			};
 
 			await _companyRepository.AddAsync(newCompany);
-			await _companyRepository.SaveChangesAsync();
 
 			user.CompanyId = newCompany.Id;
 			await _userRepository.SaveChangesAsync();

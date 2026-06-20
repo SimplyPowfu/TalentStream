@@ -19,5 +19,7 @@ namespace TalentStream.Core.Entities
 
 		public int? CompanyId { get; set; }
 		public Company? Company { get; set; }
+
+		public ICollection<JobApplication> MyApplications { get; set; } = new List<JobApplication>();
 	}
 }

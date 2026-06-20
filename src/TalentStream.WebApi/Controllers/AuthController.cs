@@ -18,11 +18,13 @@ namespace TalentStream.WebApi.Controllers
 	{
 		private readonly IUserRepository _userRepository;
 		private readonly IConfiguration _configuration;
+		private readonly ICandidateRepository _candidateRepository;
 
-		public AuthController(IUserRepository userRepository, IConfiguration configuration)
+		public AuthController(IUserRepository userRepository, IConfiguration configuration, ICandidateRepository candidateRepository)
 		{
 			_userRepository = userRepository;
 			_configuration = configuration;
+			_candidateRepository = candidateRepository;
 		}
 
 		[HttpPost("register")]
@@ -42,9 +44,7 @@ namespace TalentStream.WebApi.Controllers
 				CreatedAt = DateTime.UtcNow
 			};
 
-			// Prepariamo l'inserimento in memoria su EF
 			await _userRepository.AddAsync(newUser);
-			// Spingiamo i dati su SQL Server dentro Docker
 			await _userRepository.SaveChangesAsync();
 
 			return Ok(new { message = "Account creato con successo!" });
@@ -140,6 +140,21 @@ namespace TalentStream.WebApi.Controllers
 			var user = HttpContext.Items["ValidatedUser"] as User;
 			if (user == null)
 				return NotFound(new { message = "Utente non trovato." });
+			if (user.Role == "Candidate")
+    		{
+				var candidateProfile = await _candidateRepository.GetByUserIdAsync(user.Id);
+				if (candidateProfile != null)
+				{
+					if (!string.IsNullOrEmpty(candidateProfile.CvUrl))
+					{
+						var relativePath = candidateProfile.CvUrl.TrimStart('/');
+						var cvFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", relativePath);
+						if (System.IO.File.Exists(cvFilePath))
+							System.IO.File.Delete(cvFilePath);
+					}
+					await _candidateRepository.Delete(user.Id);
+				}
+			}
 			_userRepository.Delete(user);
 			await _userRepository.SaveChangesAsync();
 			return Ok(new { message = "Account Eliminato con successo" });

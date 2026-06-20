@@ -6,6 +6,7 @@
 # My ignore
 
 uploads/cvs/*.pdf
+.env
 
 # User-specific files
 *.rsuser

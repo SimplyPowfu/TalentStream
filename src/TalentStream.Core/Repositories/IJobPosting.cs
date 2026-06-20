@@ -6,7 +6,7 @@ namespace TalentStream.Core.Repositories
 	{
 		Task<JobPosting?> GetByIdAsync(int id);
 		Task<JobPosting?> GetByTitleAsync(string title);
-		Task<IEnumerable<JobPosting>> GetAllJobPostingAsync();
+		Task<(IEnumerable<JobPosting> Jobs, int Total)> GetPaginatedJobPostingsAsync(int pageNumber, int pageSize);
 		Task<JobPosting?> GetIdJobPostingAsync(int id);
 		void Update(JobPosting jobPosting);
 		void Delete(JobPosting jobPosting);

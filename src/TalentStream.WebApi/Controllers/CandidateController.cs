@@ -7,6 +7,7 @@ using TalentStream.Core.DTOs.Candidate;
 using TalentStream.WebApi.Filters;
 using TalentStream.WebApi.Filter;
 using System.Globalization;
+using System.Threading.Tasks;
 namespace TalentStream.WebApi.Controllers
 {
 	public class UploadCv
@@ -79,12 +80,12 @@ namespace TalentStream.WebApi.Controllers
 
 		[HttpGet("profile/{id}")]
 		[Authorize(Roles = "Recruiter")]
-		public ActionResult<CandidateProfile> GetProfile(int id)
+		public async Task<ActionResult<CandidateProfile>> GetProfile(int id)
 		{
-			var profile = _candidateRepository.GetByUserIdAsync(id);
-			if (profile.Result == null)
+			var profile = await _candidateRepository.GetByUserIdAsync(id);
+			if (profile == null)
 				return NotFound(new { message = "Profilo non trovato" });
-			return Ok(new { message = "Profilo Recuperato con successo", profile = profile.Result });
+			return Ok(new { message = "Profilo Recuperato con successo", profile });
 		}
 
 

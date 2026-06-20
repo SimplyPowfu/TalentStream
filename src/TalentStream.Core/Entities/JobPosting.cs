@@ -15,5 +15,7 @@ namespace TalentStream.Core.Entities
 		// Chiave Esterna (Foreign Key): Collega l'annuncio alla specifica azienda che lo ha creato.
 		public int CompanyId { get; set; }
 		public Company? Company { get; set; }
+
+		public ICollection<JobApplication> Applications { get; set; } = new List<JobApplication>();
 	}
 }

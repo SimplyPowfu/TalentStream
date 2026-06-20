@@ -15,6 +15,7 @@ namespace TalentStream.Infrastructure.Persistence
 		public DbSet<User> Users { get; set; } = null!;
 		public DbSet<Company> Companies { get; set; } = null!;
 		public DbSet<JobPosting> JobPostings { get; set; } = null!;
+		public DbSet<JobApplication> JobApplications { get; set; } = null!;
 
 		// Usiamo questo metodo per rifinire le regole delle colonne (es. precisione dei decimali o vincoli).
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
