@@ -34,7 +34,7 @@ services:
       # ConnectionStrings (SqlDb, MongoDb, Redis)
       - ConnectionStrings__SqlDb=${SQL_CONNECTION_STRING}
       - ConnectionStrings__MongoDb=${MONGO_CONNECTION_STRING}
-      - ConnectionStrings__Redis=redis:6380
+      - ConnectionStrings__Redis=redis:6379
       
       # MongoSettings
       - MongoSettings__DatabaseName=TalentStreamMongoDb
@@ -78,8 +78,8 @@ services:
     image: mongo:latest
     container_name: mongodb_db
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=pass
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASS}
     volumes:
       - mongo_data:/data/db
     ports:
@@ -93,7 +93,7 @@ services:
     ports:
       - "8082:8081"
     environment:
-      - ME_CONFIG_MONGODB_URL=${MONGO_CONNECTION_STRING}
+      - ME_CONFIG_MONGODB_URL=${MONGO_EXPRESS_URL}
     depends_on:
       - mongodb
     networks:

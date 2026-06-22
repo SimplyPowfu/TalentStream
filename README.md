@@ -83,8 +83,11 @@ TalentStream/
 SQL_PASSWORD=Password123!
 SQL_CONNECTION_STRING=Server=sql_server_db,1433;Database=TalentStreamDb;User Id=sa;Password=Password123!;TrustServerCertificate=True;
 
-# Configurazione MongoDB (Host combinato con il nome servizio del compose)
+# Configurazione MongoDB
+MONGO_ROOT_USER=root
+MONGO_ROOT_PASS=pass
 MONGO_CONNECTION_STRING=mongodb://root:pass@mongodb:27017/TalentStreamMongoDb?authSource=admin
+MONGO_EXPRESS_URL=mongodb://${MONGO_ROOT_USER}:${MONGO_ROOT_PASS}@mongodb_db:27017/admin?authSource=admin
 
 # Configurazione Sicurezza JWT
 JWT_SECRET=Secret_Talent_Stream_123456_Bisogna_Allungare_La_Stringa_Per_I_256_Bit

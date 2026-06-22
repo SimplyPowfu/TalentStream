@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TalentStream.WebApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7585a832ec035586b3da1e4ba4d32b976f8ee5da")]
 [assembly: System.Reflection.AssemblyProductAttribute("TalentStream.WebApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TalentStream.WebApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
