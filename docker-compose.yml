@@ -34,7 +34,7 @@ services:
       # ConnectionStrings (SqlDb, MongoDb, Redis)
       - ConnectionStrings__SqlDb=${SQL_CONNECTION_STRING}
       - ConnectionStrings__MongoDb=${MONGO_CONNECTION_STRING}
-      - ConnectionStrings__Redis=redis:6379 # Se aggiungerai Redis in futuro su porta standard
+      - ConnectionStrings__Redis=redis:6380
       
       # MongoSettings
       - MongoSettings__DatabaseName=TalentStreamMongoDb
@@ -93,7 +93,7 @@ services:
     ports:
       - "8082:8081"
     environment:
-      - ME_CONFIG_MONGODB_URL=mongodb://root:pass@mongodb:27017/admin?authSource=admin
+      - ME_CONFIG_MONGODB_URL=${MONGO_CONNECTION_STRING}
     depends_on:
       - mongodb
     networks:
