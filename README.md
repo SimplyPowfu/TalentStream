@@ -1,4 +1,35 @@
-# Struttura
+# TalentStream
+**TalentStream** è una piattaforma web moderna per il recruiting e la gestione dei talenti, progettata con un'architettura robusta. Il sistema è strutturato seguendo i principi **SOLID** e i pattern architetturali più efficienti del panorama Enterprise.
+
+---
+
+## 🏗️ Architettura & Stack Tecnologico
+
+Il progetto adotta un approccio **Clean Architecture** diviso in layer (`Core`, `Infrastructure`, `WebApi`), garantendo manutenibilità e isolamento dei componenti.
+
+### **Backend (.NET 6 Web API)**
+* **Entity Framework Core**: Utilizzato con approccio *Code-First* per la modellazione e la migrazione del database relazionale.
+* **Autenticazione**: Gestita tramite token **JWT (JSON Web Tokens)** con autorizzazione basata sui ruoli (es. Recruiter, Candidate).
+* **SOLID Principles**: Architettura basata sul *Repository Pattern* per disaccoppiare la logica di business dall'accesso ai dati.
+
+### **Database Layer (Polyglot Persistence)**
+* **SQL Server**: Database relazionale primario ad alte prestazioni per la gestione transazionale (Utenti, Aziende, Candidature).
+* **MongoDB**: Database NoSQL utilizzato per la gestione flessibile di dati non strutturati.
+
+### **DevOps & Infrastructure**
+* **Docker & Docker Compose**: Intera infrastruttura containerizzata (SQL Server, MongoDB, Redis, Adminer, MongoExpress) per garantire consistenza tra gli ambienti di sviluppo e produzione.
+* **Automation (Makefile)**: Automazione completa dei comandi di build, avvio infrastruttura, pulizia volumi e applicazione delle migrazioni tramite un singolo punto di ingresso.
+
+---
+
+## 🛠️ Requisiti di Sistema
+
+Prima di avviare il progetto, assicurati di avere installato:
+* [Docker]
+* [.NET 6.0 SDK]
+* `make` (disponibile nativamente su Linux/macOS, o tramite Chocolatey su Windows)
+
+## Tree
 ```
 TalentStream/
 │
@@ -77,7 +108,7 @@ TalentStream/
 └── uploads/                           # Volume condiviso per lo storage fisico locale dei CV (cvs/*.pdf)
 ```
 
-# Configurazione .env
+## Configurazione .env
 ```
 # Configurazione Database SQL Server
 SQL_PASSWORD=Password123!
@@ -94,4 +125,24 @@ JWT_SECRET=Secret_Talent_Stream_123456_Bisogna_Allungare_La_Stringa_Per_I_256_Bi
 JWT_EXPIRY=60
 JWT_ISSUER=TalentStreamBackend
 JWT_AUDIENCE=TalentStreamFrontend
+```
+
+---
+
+## 🚀 Setup & Avvio Rapido
+1. Usa `make` per compilare il backend e tirare su i container in background
+2. Infine usa `make update` e Inizializza la struttura del database SQL Server applicando le migrazioni di Entity Framework
+
+## interfacce
+Puoi accedere all'interfaccia interattiva delle API tramite Swagger al link:
+```
+http://localhost:5000/swagger/index.html
+```
+Oppure accedere all'interfaccia di adminer per la visualizzazione di SQL Server al link:
+```
+http://localhost:8081
+```
+Oppure accedere all'interfaccia di Mongo Express per la visualizzazione di MongoDB al link:
+```
+http://localhost:8082
 ```
